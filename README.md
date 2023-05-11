@@ -19,19 +19,16 @@ docker-compose up
 ```
 
 
+# **以降は作業中**
+
 ## Cloud Run デプロイのセットアップ
 
-docker image をビルド(フロントエンド・バックエンドとも)
+docker image をビルド
 ```
 make build
 ```
 
-バックエンドの image をデプロイ(フロントエンドのデプロイに BACKEND_URL が必要なため先にデプロイする)
+image をデプロイ
 ```
-make deploy_fe
-```
-
-フロントエンドの image をデプロイ
-```
-make deploy_be
+make deploy
 ```
