@@ -1,0 +1,54 @@
+version: '3.4'
+services:
+  jupyterlab:
+    build:
+      context: ./jupyterlab
+      dockerfile: jupyterlab.dockerfile
+      target: jupyterlab-development
+    restart: always
+    entrypoint: >
+      jupyter-lab
+      --allow-root
+      --ip=0.0.0.0
+      --port=7100
+      --no-browser
+      --NotebookApp.token=''
+      --notebook-dir=/workspace
+    expose:
+      - 7100
+    ports:
+      - 7100:7100
+    container_name: llamaindex_jupyterlab
+    env_file:
+      - ./jupyterlab/.env
+    volumes:
+      - type: bind
+        source: "~/.config"
+        target: "/root/.config"
+      - type: bind
+        source: "./jupyterlab/config"
+        target: "/root/.jupyter"
+      - type: bind
+        source: "./jupyterlab/workspace"
+        target: "/workspace"
+    #depends_on:
+    #  - chatgpt-retrieval-plugin
+  chatgpt-retrieval-plugin:
+    build:
+      context: ./chatgpt-retrieval-plugin
+      dockerfile: chatgpt-retrieval-plugin.dockerfile
+      target: local-development
+    volumes:
+      - type: bind
+        source: "./chatgpt-retrieval-plugin"
+        target: "/src"
+    ports:
+      - 7000:7000
+    container_name: chatgpt_retrieval_plugin
+    env_file:
+      - ./chatgpt-retrieval-plugin/.env
+  qdrant:
+    image: qdrant/qdrant
+    ports:
+      - 6333:6333
+    container_name: qdrant

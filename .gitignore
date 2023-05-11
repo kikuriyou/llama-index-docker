@@ -1,0 +1,14 @@
+# OPENAI_API_KEY
+chatgpt-retrieval-plugin/.env
+jupyterlab/.env
+
+# その他不要なやつ
+__pycache__
+.ipynb_checkpoints
+
+# 後で入れるかもだが今は不要なやつ
+backend
+frontend
+docker-compose_full.yaml
+cloudrun
+Makefile
